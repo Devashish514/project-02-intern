@@ -22,9 +22,10 @@ const createCollege = async function (req, res) {
                 return res.status(400).send({ status: false, error: "LogoLink is required" });
             }
         }
-        else {
-            return res.status(404).send({ status: false, msg: "No data found" })
-        }
+        
+        // else {
+        //     return res.status(404).send({ status: false, msg: "No data found" })
+        // }
         let result = await collegeModel.create(data);
         res.status(200).send({ data: result });
     }
