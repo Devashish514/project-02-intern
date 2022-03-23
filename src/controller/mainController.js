@@ -84,12 +84,12 @@ const createIntern = async function (req, res) {
 const getCollegeDetails = async function (req, res) {
     try {
         let queryData = req.query;
-        let data = queryData.collegeName;
+        let {collegeName} = queryData
 
         if (Object.keys(queryData).length > 1) {
             return res.status(400).send({ msg: "Only one param is required-->'collegeName" })
         }
-        if (!data) {
+        if (!collegeName) {
             return res.status(400).send({ status: false, msg: "CollegeName is Required!!" })
         }
         let result = await collegeModel.findOne({ name: data });
@@ -109,7 +109,7 @@ const getCollegeDetails = async function (req, res) {
             name: name,
             fullName: fullName,
             logoLink: logoLink,
-            interest: result2
+            interest: result2.length ? result2 :res.status(404).send({ status: false, msg: "No Interns Found for this College" })
         }
         // res.status(201).send({ status: true, data: result, interest: result2 });
         res.status(200).send({data:finalData})
