@@ -92,7 +92,7 @@ const getCollegeDetails = async function (req, res) {
         if (!collegeName) {
             return res.status(400).send({ status: false, msg: "CollegeName is Required!!" })
         }
-        let result = await collegeModel.findOne({ name: data });
+        let result = await collegeModel.findOne({ name:collegeName});
         // console.log(typeof result)
         // res.send(result)
         const { name, fullName, logoLink } = result;
@@ -101,9 +101,9 @@ const getCollegeDetails = async function (req, res) {
             return res.status(400).send({ msg: "CollegeName is Invalid" })
         }
         let result2 = await internModel.find({ collegeId: { $eq: result._id } }).select({_id:1,email:1,name:1,mobile:1});
-        if (!result2) {
-            return res.status(404).send({ status: false, msg: "No Interns Found for this College" })
-        }
+        // if (!result2) {
+        //     return res.status(404).send({ status: false, msg: "No Interns Found for this College" })
+        // }
         // res.send(result2)
         const finalData = {
             name: name,
